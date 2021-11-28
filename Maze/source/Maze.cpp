@@ -73,20 +73,53 @@ std::string Maze::serialize()
 {
     std::string res = "";
     //
-    // First line
+    // First line closing maze from the top but the start point
     //
-    for (int j = 0; j < m_Width; j++)
+    res += "S ";
+    for (int j = 0; j < m_Width - 1; j++)
         res +=  "██";
     res +=  "█\n";
 
     for (int i = 0; i < m_Height; i ++) {
-        res +=  "█";
+        //
+        // Column closing maze from the left but the start point
+        //
+        if(i == 0)
+        {
+            res += " ";
+        }
+        else
+        {
+            res +=  "█"; 
+        }
+        
         for (int j = 0; j < m_Width; j ++) {
-            res +=  ((grid[i][j] & RIGHT) ? "  " : " █");
+            if(grid[i][j] & RIGHT || (i == m_Height - 1 && j == m_Width - 1))
+            {
+                res +=  "  ";
+            }
+            else
+            {
+                res += " █";
+            }
         }
         res +=  "\n█";
         for (int j = 0; j < m_Width; j ++) {
-            res +=  ((grid[i][j] & DOWN) ? " █" : "██");
+            if(i == m_Height - 1 && j == m_Width - 1)
+            {
+                res +=  " E";
+            }
+            else
+            {
+                if(grid[i][j] & DOWN)
+                {
+                    res += " █";
+                }
+                else
+                {
+                    res += "██";
+                }
+            }
         }
         res +=  "\n";
     }

@@ -1,5 +1,6 @@
 #include <boost/program_options.hpp>
 #include <iostream>
+#include "Maze.h"
 
 namespace bpo = boost::program_options;
 
@@ -9,7 +10,7 @@ int main(int argc, char* argv[])
         bool create = false;
         int width = 10;
         int height = 10;
-        float seed = 10.0f;
+        int seed = 10;
         bool solve = false;
         
         bpo::options_description desc("Program options");
@@ -18,12 +19,12 @@ int main(int argc, char* argv[])
         // The second is parameter to option
         // The third is description
         ("help,h", "display help menu")
-        ("create,c", bpo::value<bool>(&create), 
+        ("create,c", bpo::bool_switch(&create), 
             "output a solvable maze to the terminal containing both start and end points")
         ("width,w", bpo::value<int>(&width) -> default_value(10), "width of the maze to be created")
-        ("height,w", bpo::value<int>(&height) -> default_value(10), "height of the maze to be created")
-        ("seed,w", bpo::value<float>(&seed) -> default_value(10.0f), "seed of the maze to be created")
-        ("solve,x", bpo::value<bool>(&solve), 
+        ("height,h", bpo::value<int>(&height) -> default_value(10), "height of the maze to be created")
+        ("seed,s", bpo::value<int>(&seed) -> default_value(10), "seed of the maze to be created")
+        ("solve,x", bpo::bool_switch(&solve), 
             "parse the input maze from the terminal and print it back solved. "
             "If an impossible maze is given, impossible message will be printed")
         ;
@@ -41,15 +42,15 @@ int main(int argc, char* argv[])
             }
             return 0;
         }
-        if(!create)
+        if(create)
         {
-            std::cout << "Warning the maze to be solved should be passed in terminal.\n";
+            Maze maze = Maze(height, width, seed);
+            maze.kruskal();
+            std::cout << maze.serialize();
         }
         else
         {
-            //
-            // TODO : create a solvable maze
-            //
+            std::cout << "Warning the maze to be solved should be passed in terminal.\n";
         }
         if(solve)
         {
