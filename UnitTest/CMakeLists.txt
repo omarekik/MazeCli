@@ -9,8 +9,12 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
+set(Source ${CMAKE_SOURCE_DIR}/Maze/source)
+
 add_executable(unitTest main.cpp 
-                        FirstTest.cpp)
+                        MazeTest.cpp
+                        ${Source}/Maze.cpp)
+
 target_link_libraries(unitTest gtest_main Boost::boost)
 
 gtest_discover_tests(unitTest)

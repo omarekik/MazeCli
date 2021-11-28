@@ -11,6 +11,7 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(boost-cmake)
 
+
 include_directories(Maze/include)
 
 add_subdirectory(Maze)
