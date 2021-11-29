@@ -1,12 +1,20 @@
 #include <boost/program_options.hpp>
 #include <iostream>
-#include "Maze.h"
+#include <locale>
+#include <regex>
+#include "MazeGenerator.h"
+#include "MazeSolver.h"
 
 namespace bpo = boost::program_options;
 
 int main(int argc, char* argv[])
 {
-    try {
+    try 
+    {
+        std::ios_base::sync_with_stdio(false);
+        std::wcin.imbue(std::locale("en_US.UTF-8"));
+        std::wcout.imbue(std::locale("en_US.UTF-8"));
+
         bool create = false;
         int width = 10;
         int height = 10;
@@ -22,7 +30,7 @@ int main(int argc, char* argv[])
         ("create,c", bpo::bool_switch(&create), 
             "output a solvable maze to the terminal containing both start and end points")
         ("width,w", bpo::value<int>(&width) -> default_value(10), "width of the maze to be created")
-        ("height,h", bpo::value<int>(&height) -> default_value(10), "height of the maze to be created")
+        ("height,t", bpo::value<int>(&height) -> default_value(10), "height of the maze to be created")
         ("seed,s", bpo::value<int>(&seed) -> default_value(10), "seed of the maze to be created")
         ("solve,x", bpo::bool_switch(&solve), 
             "parse the input maze from the terminal and print it back solved. "
@@ -44,7 +52,7 @@ int main(int argc, char* argv[])
         }
         if(create)
         {
-            Maze maze = Maze(height, width, seed);
+            MazeGenerator maze = MazeGenerator(height, width, seed);
             maze.kruskal();
             std::cout << maze.serialize();
         }
@@ -54,7 +62,24 @@ int main(int argc, char* argv[])
         }
         if(solve)
         {
-            // TODO : solve maze
+            std::wstring line;
+            std::wstring input = L"";
+
+            while(std::getline(std::wcin,line))
+            {
+                input += line;
+                input += L"\n";
+            }  
+
+            MazeSolver maze = MazeSolver(input);
+            if(maze.deepFirstSearch())
+            {
+                std::wcout<< maze.serializeSolution();
+            }
+            else
+            {
+                std::cout<<"The given maze is not solvable!\n";
+            }
         }
     }
     catch(std::exception& e) {

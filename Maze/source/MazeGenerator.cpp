@@ -1,4 +1,4 @@
-#include "Maze.h"
+#include "MazeGenerator.h"
 #include <tuple>
 #include <stdlib.h>
 #include <algorithm>
@@ -62,14 +62,15 @@ struct Wall {
     Direction m_Direction;
 };
 
-Maze::Maze(int height, int width, int seed) : m_Width(width)
+MazeGenerator::MazeGenerator(int height, int width, int seed) : m_Width(width)
                                             , m_Height(height)
 {
     srand(seed);
-    grid.assign(m_Height, std::vector<int>(m_Width));
+    m_Grid.assign(m_Height, std::vector<int>(m_Width));
 }
 
-std::string Maze::serialize() 
+
+std::string MazeGenerator::serialize() 
 {
     std::string res = "";
     //
@@ -80,7 +81,8 @@ std::string Maze::serialize()
         res +=  "██";
     res +=  "█\n";
 
-    for (int i = 0; i < m_Height; i ++) {
+    for (int i = 0; i < m_Height; i ++) 
+    {
         //
         // Column closing maze from the left but the start point
         //
@@ -93,8 +95,9 @@ std::string Maze::serialize()
             res +=  "█"; 
         }
         
-        for (int j = 0; j < m_Width; j ++) {
-            if(grid[i][j] & RIGHT || (i == m_Height - 1 && j == m_Width - 1))
+        for (int j = 0; j < m_Width; j ++) 
+        {
+            if(m_Grid[i][j] & RIGHT || (i == m_Height - 1 && j == m_Width - 1))
             {
                 res +=  "  ";
             }
@@ -104,14 +107,15 @@ std::string Maze::serialize()
             }
         }
         res +=  "\n█";
-        for (int j = 0; j < m_Width; j ++) {
+        for (int j = 0; j < m_Width; j ++) 
+        {
             if(i == m_Height - 1 && j == m_Width - 1)
             {
                 res +=  " E";
             }
             else
             {
-                if(grid[i][j] & DOWN)
+                if(m_Grid[i][j] & DOWN)
                 {
                     res += " █";
                 }
@@ -126,12 +130,12 @@ std::string Maze::serialize()
     return res;
 }
 
-int Maze::cellIndex(int x, int y) 
+int MazeGenerator::cellIndex(int x, int y) 
 {
     return x * m_Width + y;
 }
 
-Direction Maze::oppositeDirection(Direction direction)
+Direction MazeGenerator::oppositeDirection(Direction direction)
 {
     switch (direction)
     {
@@ -150,7 +154,7 @@ Direction Maze::oppositeDirection(Direction direction)
 // Kruskal maze is explained in:
 // https://weblog.jamisbuck.org/2011/1/3/maze-generation-kruskal-s-algorithm
 //
-void Maze::kruskal() {
+void MazeGenerator::kruskal() {
     std::vector<Wall> walls;
     walls.reserve(m_Width * m_Height);
     for (int i = 0; i < m_Height; i++) {
@@ -186,8 +190,8 @@ void Maze::kruskal() {
         if (!disjoint_set.sameSet(current, next)) 
         {
             disjoint_set.unifySet(current, next);
-            grid[wall_abscissa][wall_ordinate] |= wall_direction;
-            grid[next_abscissa][next_ordinate] |= oppositeDirection(wall_direction);
+            m_Grid[wall_abscissa][wall_ordinate] |= wall_direction;
+            m_Grid[next_abscissa][next_ordinate] |= oppositeDirection(wall_direction);
         }
     }
 }
