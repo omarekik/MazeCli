@@ -1,15 +1,15 @@
 # MazeCli
 Command line interface for maze creation and resolve.
 ## Build:
-Buildable with cmake (minimum version 3.14) using modern C++ compiler (minimum version C++17) by running following command for linux:
+Using following command, docker container will build solution (CMake + C++17 compiler), run examples and remain open bash to try more options:
 ```
 git clone git@github.com:omarekik/MazeCli.git && cd MazeCli
-mkdir build && cd build && cmake .. && make && make test
+cd Maze && docker run --rm -it $(docker build -q .)
 ```
 ## Example of execution:
 Remain in the build directory and run the following commands:
 ```console
-$ ./Maze/maze -h
+$ ./maze -h
 Program options:
   -h [ --help ]             display help menu
   -c [ --create ]           output a solvable maze to the terminal containing 
@@ -25,7 +25,7 @@ Either create or solve option should be called
 ```
 
 ```console
-$ ./Maze/maze --create --width 10 --height 10 --seed 10
+$ ./maze --create --width 10 --height 10 --seed 10
 S ███████████████████
     █     █         █
 █ ███ █ █████ ███████
@@ -48,10 +48,10 @@ S ███████████████████
 █     █ █
 ███████████████████ E
 ```
-The short form of this same command is `./Maze/maze -c -w 10 -t 10 -s 10` or `./Maze/maze -c`
+The short form of this same command is `./maze -c -w 10 -t 10 -s 10` or `./maze -c`
 
 ```console
-$ ./Maze/maze -c | ./Maze/maze --solve
+$ ./maze -c | ./maze --solve
 Sx███████████████████
  x  █     █         █
 █x███ █ █████ ███████
@@ -74,9 +74,8 @@ Sx███████████████████
 █     █ █          xx
 ███████████████████ E
 ```
-The short form of this same command is `./Maze/maze -x`
+The short form of this same command is `./maze -x`
 
 ## Open items to improve performance:
 
-* Dockerize the CLI
 * Package the CLI as a Conan module

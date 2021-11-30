@@ -11,7 +11,7 @@ FetchContent_MakeAvailable(googletest)
 
 set(BUILD_TYPE_RELEASE TRUE)
 
-set(Source ${CMAKE_SOURCE_DIR}/Maze/source)
+set(Source ${CMAKE_SOURCE_DIR}/src)
 
 add_executable(unitTest main.cpp 
                         MazeGeneratorTest.cpp
