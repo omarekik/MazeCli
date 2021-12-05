@@ -1,15 +1,16 @@
 # MazeCli
 Command line interface for maze creation and resolve.
 ## Build:
-Using following command, docker container will build solution (CMake + C++17 compiler), run examples and remain open bash to try more options:
+Using following command, docker image will be built from github repository and running it wil build solution (CMake + C++17 compiler), run unit tests, run examples and remain  bash opened to try more options:
 ```
-git clone git@github.com:omarekik/MazeCli.git && cd MazeCli
-cd Maze && docker run --rm -it $(docker build -q .)
+git clone git@github.com:omarekik/MazeCli.git && cd MazeCli/maze
+docker run --rm -it $(docker build -q .)
 ```
+Docker image can be also pulled from dockerHub: `docker pull omarekik/maze:1.0.0 && docker run -it omarekik/maze:1.0.0`
 ## Example of execution:
-Remain in the build directory and run the following commands:
+Remain in the main directory and run the following commands:
 ```console
-$ ./maze -h
+$ ./Maze -h
 Program options:
   -h [ --help ]             display help menu
   -c [ --create ]           output a solvable maze to the terminal containing 
@@ -25,7 +26,7 @@ Either create or solve option should be called
 ```
 
 ```console
-$ ./maze --create --width 10 --height 10 --seed 10
+$ ./Maze --create --width 10 --height 10 --seed 10
 S ███████████████████
     █     █         █
 █ ███ █ █████ ███████
@@ -48,10 +49,10 @@ S ███████████████████
 █     █ █
 ███████████████████ E
 ```
-The short form of this same command is `./maze -c -w 10 -t 10 -s 10` or `./maze -c`
+The short form of this same command is `./Maze -c -w 10 -t 10 -s 10` or `./Maze -c`
 
 ```console
-$ ./maze -c | ./maze --solve
+$ ./Maze -c | ./Maze --solve
 Sx███████████████████
  x  █     █         █
 █x███ █ █████ ███████
@@ -74,7 +75,7 @@ Sx███████████████████
 █     █ █          xx
 ███████████████████ E
 ```
-The short form of this same command is `./maze -x`
+The short form of this same command is `./Maze -x`
 
 ## Open items to improve performance:
 

@@ -9,14 +9,16 @@ make
 # Run unit tests
 make test 
 
+cd main
+
 # Print help message
-./maze -h 
+./Maze -h 
 
 # Create a maze
-./maze --create --width 10 --height 10 --seed 1234 
+./Maze --create --width 10 --height 10 --seed 1234 
 
 # Solve maze
-./maze -c | ./maze --solve
+./Maze -c | ./Maze --solve
 
 # Open a bash terminal
 bash
