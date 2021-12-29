@@ -1,16 +1,19 @@
 # MazeCli
 Command line interface for maze creation and resolve.
 ## Build:
-Using following command, docker image will be built from github repository and running it wil build solution (CMake + C++17 compiler), run unit tests, run examples and remain  bash opened to try more options:
+Using following command, docker image will be built from github repository and running it will : 
+ * Build MazeCli solution (Conan + CMake + C++17 compiler)
+ * Run unit tests
+ * Run examples and remain  bash opened to try more examples of execution
 ```
 git clone git@github.com:omarekik/MazeCli.git && cd MazeCli/maze
 docker run --rm -it $(docker build -q .)
 ```
-Docker image can be also pulled from dockerHub: `docker pull omarekik/maze:1.0.0 && docker run -it omarekik/maze:1.0.0`
+Docker image can be also pulled from dockerHub: `docker pull omarekik/maze:1.0.1 && docker run -it omarekik/maze:1.0.1`
 ## Example of execution:
 Remain in the main directory and run the following commands:
 ```console
-$ ./Maze -h
+# Maze -h
 Program options:
   -h [ --help ]             display help menu
   -c [ --create ]           output a solvable maze to the terminal containing 
@@ -26,7 +29,7 @@ Either create or solve option should be called
 ```
 
 ```console
-$ ./Maze --create --width 10 --height 10 --seed 10
+# Maze --create --width 10 --height 10 --seed 10
 S ███████████████████
     █     █         █
 █ ███ █ █████ ███████
@@ -49,10 +52,10 @@ S ███████████████████
 █     █ █
 ███████████████████ E
 ```
-The short form of this same command is `./Maze -c -w 10 -t 10 -s 10` or `./Maze -c`
+The short form of this same command is `Maze -c -w 10 -t 10 -s 10` or `Maze -c`
 
 ```console
-$ ./Maze -c | ./Maze --solve
+# Maze -c | Maze --solve
 Sx███████████████████
  x  █     █         █
 █x███ █ █████ ███████
@@ -75,8 +78,5 @@ Sx███████████████████
 █     █ █          xx
 ███████████████████ E
 ```
-The short form of this same command is `./Maze -x`
+The short form of this same command is `Maze -x`
 
-## Open items to improve performance:
-
-* Package the CLI as a Conan module
