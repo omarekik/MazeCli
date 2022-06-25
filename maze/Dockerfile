@@ -15,7 +15,7 @@ RUN wget -qO- "https://cmake.org/files/v3.22/cmake-3.22.0-linux-x86_64.tar.gz" \
 
 # Install conan
 RUN python3 -m pip install --upgrade pip setuptools && \
-    python3 -m pip install conan && \
+    python3 -m pip install conan==1.49.0 && \
     conan --version
 
 COPY . /usr/src/maze
