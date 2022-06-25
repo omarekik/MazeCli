@@ -2,7 +2,7 @@ project(Configs)
 
 add_subdirectory(tests)
 
-find_package(boost COMPONENTS boost program_options REQUIRED)
+find_package(Boost COMPONENTS boost program_options REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 
 set(HEADERS
@@ -16,7 +16,7 @@ set(SOURCES
 add_library(${PROJECT_NAME} STATIC ${SOURCES} ${HEADERS})
 
 target_link_libraries(${PROJECT_NAME} INTERFACE
-    boost::boost boost::program_options
+    Boost::boost Boost::program_options
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
